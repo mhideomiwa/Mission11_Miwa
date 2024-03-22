@@ -1,7 +1,17 @@
+using Mission11_Miwa.Models;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<BookStoreContext>(options =>
+{
+    options.UseSqlite(builder.Configuration["ConnectionStrings:BookstoreConnection"]);
+});
+
+builder.Services.AddScoped<IBookStoreRepository, EfBookStoreRepository>();
 
 var app = builder.Build();
 
